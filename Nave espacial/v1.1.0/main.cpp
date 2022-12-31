@@ -6,19 +6,22 @@
 int main(){
 
     system("Title Juego de la Nave Espacial");
-    Menu_Juego();
     Ocultar_Cursor();
+    Menu_Juego();
 
     char Tecla;
     Tecla = getch();
 
-    if(Tecla == ESC){
-        return 0;
-    }//Fin de la declaracion del ESC.
+    switch(Tecla){
+        //Caso ESC.
+        case ESC:
+            return 0;
+        break;  //Fin del caso ESC.
 
-    if(Tecla == 'd' || Tecla == 'D'){
-        system("cls");
-        Sleep(130);
+        //Caso '1'.
+        case '1':
+            system("cls");
+            Sleep(130);
 	
         while(Tecla != ESC && Num_vidas > 0){
             Ocultar_Cursor();
@@ -27,12 +30,12 @@ int main(){
             Barra_de_Salud(Corazones);
             gotoxy(55,1); printf("NIVEL %i",nivel);
         }
-    }
-
+        break;  //Fin del caso '1'.
+    }//Fin del Switch.
     system("cls");
     Pintar_Marco();
     gotoxy(51,13); printf("Gracias por jugar!");
     gotoxy(34,14); printf("Presiona cualquier tecla para finalizar el programa.");
-	system("pause > NULL");     //El system ("pause") nos sirve para que el programa se pause y no se cierre solo.
+	system("pause > NULL");     //System("pause") nos funciona para que el programa se pause y no se cierre solo.
 	return 0;
 }
