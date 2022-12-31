@@ -36,7 +36,7 @@ void PintarAvion(int x){
     strcpy(Moversex, CampoDeMovimientox);
     Moversex[x]=0;
 
-    printf(Moversex); puts(avion_11);
-    printf(Moversex); puts(avion_12);
-    printf(Moversex); puts(avion_13);
+    printf(Moversex);puts(avion_11);
+    printf(Moversex);puts(avion_12);
+    printf(Moversex);puts(avion_13);
 }
