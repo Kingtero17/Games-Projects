@@ -34,7 +34,7 @@ int Num_vidas = 3;
 int Corazones = 3;
 
 //Coordenadas de los asteroides.
-int y = 8, x = 12;
+int y = 8,   x = 12;
 int yy = 12, xx = 17;
 int x1 = 58, y1 = 44;
 int x2 = 70, y2 = 9;
