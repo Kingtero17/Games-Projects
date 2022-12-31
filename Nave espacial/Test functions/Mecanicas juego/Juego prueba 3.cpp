@@ -2,7 +2,7 @@
 #include<conio.h>
 #include<windows.h>
 
-//Definiendo teclas izquierda y derecha para mover la nave espacial.
+//Definiendo teclas flecha izquierda y derecha para mover la nave espacial.
 #define IZQUIERDA 75
 #define DERECHA 77
 
@@ -76,23 +76,23 @@ void Vidas(){
 
 void Explosion(void){
     //Primera Explosion.
-    gotoxy(ix,iy); puts(explosion_e1);
-    gotoxy(ix,iy+1); puts(explosion_e2);
-    gotoxy(ix,iy+2); puts(explosion_e3);
+    gotoxy(ix,iy);  puts(explosion_e1);
+    gotoxy(ix,iy+1);puts(explosion_e2);
+    gotoxy(ix,iy+2);puts(explosion_e3);
 
     Sleep(380); //Funcion "Sleep" detiene el programa 380 milisegundos para asi poder apreciar la explosion.
     
     //Segunda Explosion
-    gotoxy(ix,iy); puts(explosion_e11);
-    gotoxy(ix,iy+1); puts(explosion_e22);
-    gotoxy(ix,iy+2); puts(explosion_e33);
+    gotoxy(ix,iy);  puts(explosion_e11);
+    gotoxy(ix,iy+1);puts(explosion_e22);
+    gotoxy(ix,iy+2);puts(explosion_e33);
 
     Sleep(380);
 
     //Imprimimos la nave.
-    gotoxy(ix,iy); puts(avion_11);
-    gotoxy(ix,iy+1); puts(avion_12);
-    gotoxy(ix,iy+2); puts(avion_13);
+    gotoxy(ix,iy);  puts(avion_11);
+    gotoxy(ix,iy+1);puts(avion_12);
+    gotoxy(ix,iy+2);puts(avion_13);
 }
 
 /*Apartir de esta parte del progrma, haremos todas
@@ -104,20 +104,20 @@ void Jugar(void){
     int i = 1000;
     do{
         //El 0 es la imagen que el programa proyectara de los asteroides.
-        gotoxy(x,y);   printf("%c", 169);
-        gotoxy(xx,yy); printf("%c", 169);
-        gotoxy(x1,y1); printf("%c", 169);
-        gotoxy(x2,y2); printf("%c", 169);
-        gotoxy(x3,y3); printf("%c", 169);
+        gotoxy(x,y);  printf("%c", 169);
+        gotoxy(xx,yy);printf("%c", 169);
+        gotoxy(x1,y1);printf("%c", 169);
+        gotoxy(x2,y2);printf("%c", 169);
+        gotoxy(x3,y3);printf("%c", 169);
 
         Sleep(50);
 
         //Parar borrar los asteroides despues de cierto tiempo.
-        gotoxy(x,y);   printf(" ");
-        gotoxy(xx,yy); printf(" ");
-        gotoxy(x1,y1); printf(" ");
-        gotoxy(x2,y2); printf(" ");
-        gotoxy(x3,y3); printf(" ");
+        gotoxy(x,y);  printf(" ");
+        gotoxy(xx,yy);printf(" ");
+        gotoxy(x1,y1);printf(" ");
+        gotoxy(x2,y2);printf(" ");
+        gotoxy(x3,y3);printf(" ");
 
         /*Si "y" (Eje "y" del asteroide) es mayor que 20, entoces "y" pasara a valer 4 (El asteroide subira)
         y "x" sera igual a un numero pseudo-random con limite de 110 y le sumamos 6 (El "6+" funciona para
@@ -159,15 +159,15 @@ void Jugar(void){
                 switch(tecla){
                     case IZQUIERDA:
                         if(ix > 4){
-                            gotoxy(ix,iy);   puts(borrar_avion);
-                            gotoxy(ix,iy+1); puts(borrar_avion);
-                            gotoxy(ix,iy+2); puts(borrar_avion);
+                            gotoxy(ix,iy);  puts(borrar_avion);
+                            gotoxy(ix,iy+1);puts(borrar_avion);
+                            gotoxy(ix,iy+2);puts(borrar_avion);
 
                             ix -= 2;    //Despues de borrar la nave, le restamos 2 a su posicion actual.
 
-                            gotoxy(ix,iy);   puts(avion_11);
-                            gotoxy(ix,iy+1); puts(avion_12);
-                            gotoxy(ix,iy+2); puts(avion_13);
+                            gotoxy(ix,iy);  puts(avion_11);
+                            gotoxy(ix,iy+1);puts(avion_12);
+                            gotoxy(ix,iy+2);puts(avion_13);
                         }
                     break;
 
@@ -177,15 +177,15 @@ void Jugar(void){
 
                     case DERECHA :
                         if(ix < 118){
-                            gotoxy(ix,iy);   puts(borrar_avion);
-                            gotoxy(ix,iy+1); puts(borrar_avion);
-                            gotoxy(ix,iy+2); puts(borrar_avion);
+                            gotoxy(ix,iy);  puts(borrar_avion);
+                            gotoxy(ix,iy+1);puts(borrar_avion);
+                            gotoxy(ix,iy+2);puts(borrar_avion);
 
                             ix += 2;    //ix = ix +2; 'o' ix += 2;
 
-                            gotoxy(ix,iy);   puts(avion_11);
-                            gotoxy(ix,iy+1); puts(avion_12);
-                            gotoxy(ix,iy+2); puts(avion_13); 
+                            gotoxy(ix,iy);  puts(avion_11);
+                            gotoxy(ix,iy+1);puts(avion_12);
+                            gotoxy(ix,iy+2);puts(avion_13); 
                         }
                     break;
                 }//Fin del switch
