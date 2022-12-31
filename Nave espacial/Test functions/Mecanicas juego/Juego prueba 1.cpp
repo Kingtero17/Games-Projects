@@ -10,7 +10,7 @@ int Num_vidas = 3;
 int Corazones = 3;
 
 //Coordenadas de los asteroides.
-int y = 8, x = 12;
+int y = 8,   x = 12;
 int yy = 12, xx = 17;
 int x1 = 58, y1 = 44;
 int x2 = 70, y2 = 9;
@@ -53,26 +53,27 @@ void Jugar(void){
     //Mecanicas de los asteriodes.
     int i = 100;
     do{
-        gotoxy(x,y); printf ("*");
-        gotoxy(xx,yy); printf ("*");
-        gotoxy(x1,y1); printf ("*");
-        gotoxy(x2,y2); printf ("*");
-        gotoxy(x3,y3); printf ("*");
+        gotoxy(x,y);  printf("*");
+        gotoxy(xx,yy);printf("*");
+        gotoxy(x1,y1);printf("*");
+        gotoxy(x2,y2);printf("*");
+        gotoxy(x3,y3);printf("*");
 
         Sleep(30);
 
-        //Para que el programa borre los asteroides despues de cierto tiempo.
-        gotoxy(x,y);   printf (" ");
-        gotoxy(xx,yy); printf (" ");
-        gotoxy(x1,y1); printf (" ");
-        gotoxy(x2,y2); printf (" ");
-        gotoxy(x3,y3); printf (" ");
+        //Para borrar a los asteroides despues de cierto tiempo.
+        gotoxy(x,y);  printf(" ");
+        gotoxy(xx,yy);printf(" ");
+        gotoxy(x1,y1);printf(" ");
+        gotoxy(x2,y2);printf(" ");
+        gotoxy(x3,y3);printf(" ");
 
-    /*Si "y" (Eje "y" del asteroide) es mayor que 20, entoces "y" pasara a valer 4 (El asteroide subira)
-    y "x" sera igual a un numero pseudo-random con limite de 110 y le sumamos 6 (El "6+" funciona para
-    que el asteroide no se genere tan cerca al lado izquierdo de la pantalla y para que la posicion del
-    asteroide sea un poco mas random).*/
+        /*Si "y" (Eje "y" del asteroide) es mayor que 20, entoces "y" pasara a valer 4 (El asteroide subira)
+        y "x" sera igual a un numero pseudo-random con limite de 110 y le sumamos 6 (El "6+" funciona para
+        que el asteroide no se genere tan cerca al lado izquierdo de la pantalla y para que la posicion del
+        asteroide sea un poco mas random).*/
 
+        //Procedimiento con todos los asteroides.
         if(y > 20){
         y = 4;
         x = (rand() % 110) + 6;
