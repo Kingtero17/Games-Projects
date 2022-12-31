@@ -37,8 +37,8 @@ void PintarAvion(int x){
     //Campo de movimiento.
     Moversex[x] = 0;
 
-    /*Mandamos a imprimir primero los espacios indicados y depues la cadena de caracteres de la nave espacial*/
-    printf(Moversex); puts(avion_11);
-    printf(Moversex); puts(avion_12);
-    printf(Moversex); puts(avion_13);
+    //Mandamos a imprimir primero los espacios indicados y depues la cadena de caracteres de la nave espacial.
+    printf(Moversex);puts(avion_11);
+    printf(Moversex);puts(avion_12);
+    printf(Moversex);puts(avion_13);
 }
