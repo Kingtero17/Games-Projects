@@ -221,23 +221,23 @@ void Barra_de_Salud(int n){
 //EXplosion nave.
 void Explosion(void){
     //Primera explosion.
-    gotoxy(ix,iy);   puts(explosion_e1);
-    gotoxy(ix,iy+1); puts(explosion_e2);
-    gotoxy(ix,iy+2); puts(explosion_e3);
+    gotoxy(ix,iy);  puts(explosion_e1);
+    gotoxy(ix,iy+1);puts(explosion_e2);
+    gotoxy(ix,iy+2);puts(explosion_e3);
 
     Sleep(380);     //Funcion "Sleep" detiene el programa 380 milisegundos para asi poder apreciar la explosion.
 
     //Segunda explosion.
-    gotoxy(ix,iy);   puts(explosion_e11);
-    gotoxy(ix,iy+1); puts(explosion_e22);
-    gotoxy(ix,iy+2); puts(explosion_e33);
+    gotoxy(ix,iy);  puts(explosion_e11);
+    gotoxy(ix,iy+1);puts(explosion_e22);
+    gotoxy(ix,iy+2);puts(explosion_e33);
 
         Sleep(380);
 
     //Nave espacial.
-    gotoxy (ix,iy);   puts(avion_11);
-    gotoxy (ix,iy+1); puts(avion_12);
-    gotoxy (ix,iy+2); puts(avion_13);
+    gotoxy (ix,iy);  puts(avion_11);
+    gotoxy (ix,iy+1);puts(avion_12);
+    gotoxy (ix,iy+2);puts(avion_13);
 
     /*Se imprime la nave, porque sino, despues de
     la explosion no se veria la misma.*/
@@ -248,16 +248,16 @@ void Explosion(void){
 los niveles y el movimiento de la nave.*/
 void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &repeticion){
     //Mecanicas de los asteriodes.
-    gotoxy(x,y);   printf("%c", 1);
-    gotoxy(xx,yy); printf("%c", 1);
-    gotoxy(x1,y1); printf("%c", 1);
-    gotoxy(x2,y2); printf("%c", 1);
-    gotoxy(x3,y3); printf("%c", 1);     //Imagen de los asteroides: simbolo 1 en codigo ASCII.
-    gotoxy(x4,y4); printf("%c", 1);
-    gotoxy(x5,y5); printf("%c", 1);
-	gotoxy(x6,y6); printf("%c", 1);
-    gotoxy(x7,y7); printf("%c", 1);
-	gotoxy(x8,y8); printf("%c", 1);
+    gotoxy(x,y);  printf("%c", 1);
+    gotoxy(xx,yy);printf("%c", 1);
+    gotoxy(x1,y1);printf("%c", 1);
+    gotoxy(x2,y2);printf("%c", 1);
+    gotoxy(x3,y3);printf("%c", 1);     //Imagen de los asteroides: simbolo 1 en codigo ASCII.
+    gotoxy(x4,y4);printf("%c", 1);
+    gotoxy(x5,y5);printf("%c", 1);
+	gotoxy(x6,y6);printf("%c", 1);
+    gotoxy(x7,y7);printf("%c", 1);
+	gotoxy(x8,y8);printf("%c", 1);
 
     Sleep(70);
 
@@ -266,16 +266,16 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
     los asteroides, haciendo la ilusion de caida.
     */
 
-    gotoxy(x,y);   printf(" ");
-    gotoxy(xx,yy); printf(" ");
-    gotoxy(x1,y1); printf(" ");
-    gotoxy(x2,y2); printf(" ");
-    gotoxy(x3,y3); printf(" ");
-    gotoxy(x4,y4); printf(" ");
-    gotoxy(x5,y5); printf(" ");
-	gotoxy(x6,y6); printf(" ");
-	gotoxy(x7,y7); printf(" ");
-	gotoxy(x8,y8); printf(" ");
+    gotoxy(x,y);  printf(" ");
+    gotoxy(xx,yy);printf(" ");
+    gotoxy(x1,y1);printf(" ");
+    gotoxy(x2,y2);printf(" ");
+    gotoxy(x3,y3);printf(" ");
+    gotoxy(x4,y4);printf(" ");
+    gotoxy(x5,y5);printf(" ");
+	gotoxy(x6,y6);printf(" ");
+	gotoxy(x7,y7);printf(" ");
+	gotoxy(x8,y8);printf(" ");
 
 
     /*Si "y" (Eje "y" del asteroide) es mayor que 20, entoces "y" pasara a valer 4 (El asteroide subira)
@@ -343,15 +343,15 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
         switch(tecla){
             case IZQUIERDA :
                 if(ix > 4){
-                    gotoxy(ix,iy);   puts(borrar_avion);
-                    gotoxy(ix,iy+1); puts(borrar_avion);
-                    gotoxy(ix,iy+2); puts(borrar_avion);
+                    gotoxy(ix,iy);  puts(borrar_avion);
+                    gotoxy(ix,iy+1);puts(borrar_avion);
+                    gotoxy(ix,iy+2);puts(borrar_avion);
 
                     ix -= 2;    //Despues de borrar la nave, le restamos 2 a su posicion actual.
 
-                    gotoxy(ix,iy);   puts(avion_11);
-                    gotoxy(ix,iy+1); puts(avion_12);
-                    gotoxy(ix,iy+2); puts(avion_13);
+                    gotoxy(ix,iy);  puts(avion_11);
+                    gotoxy(ix,iy+1);puts(avion_12);
+                    gotoxy(ix,iy+2);puts(avion_13);
                 }
             break;
 
@@ -361,15 +361,15 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
 
             case DERECHA :
                 if(ix < 118){
-                    gotoxy(ix,iy);   puts(borrar_avion);
-                    gotoxy(ix,iy+1); puts(borrar_avion);
-                    gotoxy(ix,iy+2); puts(borrar_avion);
+                    gotoxy(ix,iy);  puts(borrar_avion);
+                    gotoxy(ix,iy+1);puts(borrar_avion);
+                    gotoxy(ix,iy+2);puts(borrar_avion);
 
                     ix += 2;    //ix = ix +2; 'o' ix += 2;
 
-                    gotoxy(ix,iy);   puts(avion_11);
-                    gotoxy(ix,iy+1); puts(avion_12);
-                    gotoxy(ix,iy+2); puts(avion_13);
+                    gotoxy(ix,iy);  puts(avion_11);
+                    gotoxy(ix,iy+1);puts(avion_12);
+                    gotoxy(ix,iy+2);puts(avion_13);
                 }
             break;
         }//Fin del switch.
@@ -392,9 +392,9 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
         Barra_de_Salud(Corazones);
     }
 
-    gotoxy(ix,iy);   puts(avion_11);
-    gotoxy(ix,iy+1); puts(avion_12);
-    gotoxy(ix,iy+2); puts(avion_13);
+    gotoxy(ix,iy);  puts(avion_11);
+    gotoxy(ix,iy+1);puts(avion_12);
+    gotoxy(ix,iy+2);puts(avion_13);
 
     if(Corazones == 0){     //(!Corazones).
         Num_vidas --;
@@ -414,15 +414,15 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
         nivel++;
         gotoxy(55,1); printf("NIVEL %i",nivel);
 
-        gotoxy(ix,iy);   puts(borrar_avion);
-        gotoxy(ix,iy+1); puts(borrar_avion);
-        gotoxy(ix,iy+2); puts(borrar_avion);
+        gotoxy(ix,iy);  puts(borrar_avion);
+        gotoxy(ix,iy+1);puts(borrar_avion);
+        gotoxy(ix,iy+2);puts(borrar_avion);
 
         iy -=1;
 
-        gotoxy(ix,iy); puts(avion_11);
-        gotoxy(ix,iy+1); puts(avion_12);
-        gotoxy(ix,iy+2); puts(avion_13);
+        gotoxy(ix,iy);  puts(avion_11);
+        gotoxy(ix,iy+1);puts(avion_12);
+        gotoxy(ix,iy+2);puts(avion_13);
 
         repeticion = 0;
     }
