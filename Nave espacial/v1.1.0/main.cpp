@@ -7,7 +7,7 @@ int main(){
 
     system("Title Juego de la Nave Espacial");
     Ocultar_Cursor();
-    Menu_Juego();
+    Menu();
 
     char Tecla;
     Tecla = getch();

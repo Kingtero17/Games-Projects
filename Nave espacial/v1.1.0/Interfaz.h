@@ -2,15 +2,20 @@
 #include<conio.h>
 #include<stdio.h>
 
-/*Recordar que la libreria tiene que tener el mismo nombre con el cual se guardara la libreria,
-porque en caso contrario dara error al compilar.*/
+/*
+La libreria debe de tener el mismo nombre con el
+cual se guardara el archivo,porque en caso contrario
+dara error al compilar.
+*/
 
 //Declarando funciones.
 void gotoxy(int x,int y);
 void Ocultar_Cursor();
-void Menu_Juego();
+void Menu();
 void Pintar_Marco();
 
+
+//Definiendo las funciones.
 void gotoxy(int x,int y){
 	HANDLE hcon;
 	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -20,44 +25,40 @@ void gotoxy(int x,int y){
 	SetConsoleCursorPosition(hcon,dwPos);
 }
 
-/*El programa se escribe asi y se va a imprimir
-lo que este en la variable Prift(Estoy hablando de la funcion gotoxy).
+/*
+Instrucciones:
+gotoxy(Coordenadas(eje x, eje y));
+printf("Colocar aqui lo que quieras imprimir");
+*/
 
-Para indicarle al programa que deseas imprimir en pantalla, instrucciones:
-gotoxy(las respectivas coordenadas(eje x, eje y)); printf("Colocar aqui lo que quieras imprimir");*/
 
+/*Funcion oculta el cursor de la pantalla.
+Una funcion simplemente estética.*/
 void Ocultar_Cursor(){
-	CONSOLE_CURSOR_INFO cci = {100, FALSE};
+	CONSOLE_CURSOR_INFO cci = {50, FALSE};
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 }
 
-/*Esta funcion como  su nombre lo indica oculta el cursor de la pantalla.
-Una funcion meramente estética, para que no arruine el juego.*/
 
-void Menu_Juego(){
-	//Marco de la Pantalla de inicio del juego.
-
+//Pantalla de inicio del juego.
+void Menu(){
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
-		gotoxy( i, 2);
-		printf("%c",205);		//Se coloca (%c,y aqui el simbolo en codigo ASCII).
-		gotoxy( i, 28);
-		printf("%c",205);
+		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(i, 28);printf("%c",205);
 	}
 	//Lineas Verticales.
 	for(int i = 2; i < 29; i++){
-		gotoxy(2, i);
-		printf("%c",186);		//Se coloca (%c,y aqui el simbolo en codigo ASCII).
-		gotoxy( 117, i);
-		printf("%c",186);
+		gotoxy(2, i);  printf("%c",186);	//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(117, i);printf("%c",186);
 	}
     //Esquinas.
-    gotoxy(2,2); printf ("%c",201);
-    gotoxy(2,28); printf ("%c",200);
-    gotoxy(117,2); printf ("%c",187);
-    gotoxy(117,28); printf ("%c",188);
+    gotoxy(2,2);   printf("%c",201);
+    gotoxy(2,28);  printf("%c",200);
+    gotoxy(117,2); printf("%c",187);
+    gotoxy(117,28);printf("%c",188);
 
-	char Portada [22][110] =  	//Recuerda que siempre se tiene que agregar una fila y una columna mas, sino da error.
+	char Portada [22][110] =  	//Siempre agregar una fila y una columna demás, sino dará error.
 	{                       	//115 - 6 = 109 en el eje "x" (col) y 21 en el eje "y" (fil).
 	"    *        *          *             *    *            *           *      *      *        *    *          * ",
 	"       *           *         *     *               *            *             *      *       *       *       ",
@@ -66,7 +67,7 @@ void Menu_Juego(){
 	"            ******  ******  ******  *       ******  *        *         *         *       *              *    ",
 	"  *   *     *       *       *    *  *       *            *      *         *   *      *       *    *        * ",
 	"            ******  *       *    *  ******  ******         *        *                                *       ",
-	"     *                    *      *        *        *                     -PRESIONE D PARA JUGAR.            *",
+	"     *                    *      *        *        *                     -PRESIONE 1 PARA JUGAR.            *",
 	"  *     *  |     *    *                                     *    *       -PRESIONE ESC PARA SALIR.      *    ",
 	"     *     |  *           *    ee    *   *       *     |                       *         *                   ",
 	"         | |      *     *     eeee           *         | |   *           *        *             *    *   *  *",
@@ -89,26 +90,21 @@ void Menu_Juego(){
 	}
 }
 
+//Marco del juego.
 void Pintar_Marco(){
-	//Marco de la Pantalla de inicio del juego.
-
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
-		gotoxy( i, 2);
-		printf("%c",205);		//Se coloca (%c,y aqui el simbolo en codigo ASCII).
-		gotoxy( i, 28);
-		printf("%c",205);
+		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(i, 28);printf("%c",205);
 	}
 	//Lineas Verticales.
 	for(int i = 2; i < 29; i++){
-		gotoxy ( 2, i);
-		printf ("%c",186);		//Se coloca (%c,y aqui el simbolo en codigo ASCII).
-		gotoxy ( 117, i);
-		printf ("%c",186);
+		gotoxy(2, i);  printf("%c",186);
+		gotoxy(117, i);printf("%c",186);
 	}
     //Esquinas
-    gotoxy(2,2); printf ("%c",201);
-    gotoxy(2,28); printf ("%c",200);
-    gotoxy(117,2); printf ("%c",187);
-    gotoxy(117,28); printf ("%c",188);
+    gotoxy(2,2);   printf("%c",201);
+    gotoxy(2,28);  printf("%c",200);
+    gotoxy(117,2); printf("%c",187);
+    gotoxy(117,28);printf("%c",188);
 }
