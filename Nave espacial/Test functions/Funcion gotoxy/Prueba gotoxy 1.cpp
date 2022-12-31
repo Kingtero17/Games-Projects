@@ -14,13 +14,13 @@ void gotoxy(int x,int y){                       //Necesitamos pasarle dos parame
 }
 
 int main(){
-gotoxy(1,0); printf("Vidas 5");
+gotoxy(1,0);printf("Vidas 5");
 
 //Imprimiendo Corazones.
 for(int i = 0; i < 3; i++){
-    gotoxy(110+i,0); printf("%c", 3);
-    gotoxy(110+i,0); printf("%c", 3);
-    gotoxy(110+i,0); printf("%c", 3);
+    gotoxy(110+i,0);printf("%c", 3);
+    gotoxy(110+i,0);printf("%c", 3);
+    gotoxy(110+i,0);printf("%c", 3);
 }
 return 0;
 }
