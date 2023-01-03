@@ -149,7 +149,7 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
     gotoxy(x7,y7);printf("%c", 1);
 	gotoxy(x8,y8);printf("%c", 1);
 
-    Sleep(70);
+    Sleep(80);
 
     /*
     Despues de cierto tiempo el programa borrara

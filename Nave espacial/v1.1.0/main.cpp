@@ -5,13 +5,15 @@
 
 int main(){
 
-    system("Title Juego de la Nave Espacial");
-    Ocultar_Cursor();
-    Menu();
-
     char Tecla;
-    Tecla = getch();
-
+    
+    do{
+        system("Title Juego de la Nave Espacial");
+        Ocultar_Cursor();
+        Menu();
+        Tecla = getch();
+    }while(Tecla != '1' && Tecla != ESC);
+    
     switch(Tecla){
         //Caso ESC.
         case ESC:
@@ -21,9 +23,9 @@ int main(){
         //Caso '1'.
         case '1':
             system("cls");
-            Sleep(130);
+            Sleep(30);
 	
-        while(Tecla != ESC && Num_vidas > 0){
+        while(Num_vidas > 0){
             Ocultar_Cursor();
             Jugar(Num_vidas, Corazones, ix, iy, nivel, repeticion);
             Vidas(Num_vidas);
