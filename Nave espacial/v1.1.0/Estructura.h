@@ -28,8 +28,8 @@ char borrar_avion[]={' ',' ',' ',' ',' ',' ',' ',0};    //Borrar Nave Espacial.
 //Coordenadas, corazones y vidas iniciales de la nave.
 int ix = 54;
 int iy = 19;
-int Num_vidas = 3;
-int Corazones = 3;
+int num_vidas = 3;
+int corazones = 3;
 
 //Coordenadas de los asteroides.
 int x = 36, y = 10;
@@ -49,21 +49,23 @@ int repeticion = 0, nivel = 1;
 bool condicion = false;
 
 //Declarando funciones.
-void Vidas(int vidas);
-void Barra_de_Salud(int n);
-void Explosion(void);
-void Reiniciar_Nivel(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &repeticion);
-void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &repeticion);
-
+void vidas(int &num_vidas);
+void barra_de_salud(int &corazones);
+void explosion(void);
+void asteroides(int &ix, int &iy, int &num_vidas, int &corazones);
+void mover_nave(int &ix, int &iy);
+void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion);
+void game_over(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
+void reiniciar_nivel(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
 
 
 //Definiendo funciones.
-void Vidas(int vidas){
+void vidas(int &num_vidas){
     gotoxy(2,1);                    //Gotoxy funciona con el eje "x,y".
-    printf("VIDAS %d", vidas);      //Printf("%d", variable a imprimir).
+    printf("VIDAS %d", num_vidas);      //Printf("%d", variable a imprimir).
 }
 
-void Barra_de_Salud(int n){
+void barra_de_salud(int &corazones){
     gotoxy(110,1);printf(" ");
     gotoxy(111,1);printf(" ");
     gotoxy(112,1);printf(" ");
@@ -72,14 +74,14 @@ void Barra_de_Salud(int n){
     asi si perdemos un corazon, la variable "n" va a valer "n-=1"
     y por ende se imprimira un corazon menos.*/
 
-    for(int v = 0; v < n; v++){
+    for(int v = 0; v < corazones; v++){
         gotoxy(110+v,1);
         printf("%c", 3);
     }
 }
 
-//EXplosion nave.
-void Explosion(void){
+//Explosion nave.
+void explosion(void){
     //Primera explosion.
     gotoxy(ix,iy);  puts(explosion_e1);
     gotoxy(ix,iy+1);puts(explosion_e2);
@@ -104,39 +106,8 @@ void Explosion(void){
 }
 
 
-/*Mecanica de los asteroides,
-los niveles y el movimiento de la nave.*/
-void Reiniciar_Nivel(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &repeticion){
-    char Tecla;
-    Tecla = getch();
-    switch(Tecla){
-        case '2':
-            //Borramos los mensajes.
-            gotoxy(39, 14);printf("                                      ");
-            gotoxy(47, 15);printf("                         ");
 
-            //Borramos nave.
-            gotoxy(ix,iy);  puts(borrar_avion);
-            gotoxy(ix,iy+1);puts(borrar_avion);
-            gotoxy(ix,iy+2);puts(borrar_avion);
-
-            //Asignamos valores de reinicio.
-            ix = 54;
-            iy = 19;
-            Num_vidas = 3;
-            Corazones = 3;
-            nivel = 1;
-            repeticion = 0;
-            
-            //Imprimir nave.
-            gotoxy(ix,iy); puts(avion_11);
-            gotoxy(ix,iy+1); puts(avion_12);
-            gotoxy(ix,iy+2); puts(avion_13);
-        break;
-    }
-}
-
-void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &repeticion){
+void asteroides(int &ix, int &iy, int &num_vidas, int &corazones){
     //Mecanicas de los asteriodes.
     gotoxy(x,y);  printf("%c", 1);
     gotoxy(xx,yy);printf("%c", 1);
@@ -219,8 +190,40 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
         x8 = 7 +(rand() %110);	
     }
 
-    //Funcion mover nave espacial.
+    //Rutina de impacto de los asteroides.
 
+    /*Si "x" es mayor que las coordenadas de la nave en el eje "x" (ix) y "x" es menor que las coordenadas
+    de la nave en el eje "x" (ix) + 7 y "y" es igual que las coordenadas de la nave en el eje "y" (iy) menos 1.
+    Entonces se le restará un corazon a la barra de salud. Esto se tienen que hacer con todos
+    los asteroides.*/
+
+    if ( (x > ix && x < ix + 7 && y == iy - 1) || (xx > ix && xx < ix + 7 && yy == iy - 1)
+    || (x1 > ix && x1 < ix + 7 && y1 == iy - 1)|| (x2 > ix && x2 < ix + 7 && y2 == iy - 1)
+    || (x3 > ix && x3 < ix + 7 && y3 == iy - 1)|| (x4 > ix && x4 < ix + 7 && y4 == iy - 1)
+	|| (x5 > ix && x5 < ix + 7 && y5 == iy - 1)|| (x6 > ix && x6 < ix + 7 && y6 == iy - 1)
+	|| (x7 > ix && x7 < ix + 7 && y7 == iy - 1)|| (x8 > ix && x8 < ix + 7 && y8 == iy - 1)){
+        corazones --;
+        barra_de_salud(corazones);
+    }
+
+    gotoxy(ix,iy);  puts(avion_11);
+    gotoxy(ix,iy+1);puts(avion_12);
+    gotoxy(ix,iy+2);puts(avion_13);
+
+    if(corazones == 0){     //(!corazones).
+        num_vidas --;
+        corazones = 3;
+        vidas(num_vidas);
+        barra_de_salud(corazones);
+        explosion();
+    }
+
+    //Aumentamos la posicion en "y" de los asteroides para que vayan cayendo.
+    y++; yy++; y1++; y2++; y3++; y4++; y5++; y6++; y7++; y8++;
+}
+
+//Funcion mover nave espacial.
+void mover_nave(int &ix, int &iy){
     /*Funcion "kbhit" indica que si se detecta una tecla,
     el programa procese esa tecla y no se detenga el programa.
     Con "tecla = getch" le indicamos al programa esté atento para
@@ -263,36 +266,10 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
             break;
         }//Fin del switch.
     }//Fin del if.
+}
 
 
-    //Rutina de impacto de los asteroides.
-
-    /*Si "x" es mayor que las coordenadas de la nave en el eje "x" (ix) y "x" es menor que las coordenadas
-    de la nave en el eje "x" (ix) + 7 y "y" es igual que las coordenadas de la nave en el eje "y" (iy) menos 1.
-    Entonces se le restará un corazon a la barra de salud. Esto se tienen que hacer con todos
-    los asteroides.*/
-
-    if ( (x > ix && x < ix + 7 && y == iy - 1) || (xx > ix && xx < ix + 7 && yy == iy - 1)
-    || (x1 > ix && x1 < ix + 7 && y1 == iy - 1)|| (x2 > ix && x2 < ix + 7 && y2 == iy - 1)
-    || (x3 > ix && x3 < ix + 7 && y3 == iy - 1)|| (x4 > ix && x4 < ix + 7 && y4 == iy - 1)
-	|| (x5 > ix && x5 < ix + 7 && y5 == iy - 1)|| (x6 > ix && x6 < ix + 7 && y6 == iy - 1)
-	|| (x7 > ix && x7 < ix + 7 && y7 == iy - 1)|| (x8 > ix && x8 < ix + 7 && y8 == iy - 1)){
-        Corazones --;
-        Barra_de_Salud(Corazones);
-    }
-
-    gotoxy(ix,iy);  puts(avion_11);
-    gotoxy(ix,iy+1);puts(avion_12);
-    gotoxy(ix,iy+2);puts(avion_13);
-
-    if(Corazones == 0){     //(!Corazones).
-        Num_vidas --;
-        Vidas(Num_vidas);
-        Explosion();
-        Corazones = 3;
-        Barra_de_Salud(Corazones);
-    }
-
+void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
     //Cambio de nivel.
     if(!condicion){
     repeticion++;
@@ -315,13 +292,43 @@ void Jugar(int &Num_vidas, int &Corazones, int &ix, int &iy, int &nivel, int &re
         
         repeticion = 0;
     }
+}
 
-    //Aumentamos la posicion en "y" de los asteroides para que vayan cayendo.
-    y++; yy++; y1++; y2++; y3++; y4++; y5++; y6++; y7++; y8++;
 
-    if(Num_vidas == 0){
+void game_over(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
+    if(num_vidas == 0){
 		gotoxy(39, 14);printf("-Presione 2 para reiniciar la partida.");
         gotoxy(47, 15);printf("-Presione ESC para salir.");
-        Reiniciar_Nivel(Num_vidas, Corazones, ix, iy, nivel, repeticion);
+        reiniciar_nivel(ix, iy, num_vidas, corazones, nivel, repeticion);
     }
 }
+
+//Reiniciar nivel.
+void reiniciar_nivel(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
+    char tecla;
+    tecla = getch();
+
+    switch(tecla){
+        case '2':
+            system("cls");
+
+            //Asignamos valores de reinicio.
+            ix = 54;
+            iy = 19;
+            num_vidas = 3;
+            corazones = 3;
+            nivel = 1;
+            repeticion = 0;
+            
+            //Imprimir vidas y corazones.
+            vidas(num_vidas);
+            barra_de_salud(corazones);
+
+            //Imprimir nave.
+            gotoxy(ix,iy);  puts(avion_11);
+            gotoxy(ix,iy+1);puts(avion_12);
+            gotoxy(ix,iy+2);puts(avion_13);
+        break;
+    }
+}
+

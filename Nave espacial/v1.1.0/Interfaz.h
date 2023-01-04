@@ -10,9 +10,9 @@ dara error al compilar.
 
 //Declarando funciones.
 void gotoxy(int x,int y);
-void Ocultar_Cursor();
-void Menu();
-void Pintar_Marco();
+void ocultar_cursor();
+void menu();
+void pintar_marco();
 
 
 //Definiendo las funciones.
@@ -34,14 +34,14 @@ printf("Colocar aqui lo que quieras imprimir");
 
 /*Funcion oculta el cursor de la pantalla.
 Una funcion simplemente estética.*/
-void Ocultar_Cursor(){
+void ocultar_cursor(){
 	CONSOLE_CURSOR_INFO cci = {50, FALSE};
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 }
 
 
 //Pantalla de inicio del juego.
-void Menu(){
+void menu(){
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
 		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
@@ -91,7 +91,7 @@ void Menu(){
 }
 
 //Marco del juego.
-void Pintar_Marco(){
+void pintar_marco(){
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
 		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
