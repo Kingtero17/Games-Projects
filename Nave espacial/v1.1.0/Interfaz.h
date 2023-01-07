@@ -126,17 +126,17 @@ void menu_controles(){
 //Menu de pausa del juego.
 void menu_pausa(){
 	gotoxy(56, 7); printf("PAUSE");
-	gotoxy(29, 9); printf("SALIR:              Presione ESC para salir.");
-	gotoxy(29, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
-	gotoxy(29, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
-	gotoxy(29, 12);printf("REANUDAR PARTIDA:   Presione cualquier tecla para reanudar la partida.");
+	gotoxy(28, 9); printf("SALIR:              Presione ESC para salir.");
+	gotoxy(28, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
+	gotoxy(28, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
+	gotoxy(28, 12);printf("REANUDAR PARTIDA:   Presione 3 para reanudar la partida.");
 }
 
 //Menu Game over.
 void menu_game_over(){
-	gotoxy(29, 9);printf("SALIR:              Presione ESC para salir.");
-	gotoxy(29, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
-    gotoxy(29, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
+	gotoxy(28, 9); printf("SALIR:              Presione ESC para salir.");
+	gotoxy(28, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
+    gotoxy(28, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
 
 }
 
