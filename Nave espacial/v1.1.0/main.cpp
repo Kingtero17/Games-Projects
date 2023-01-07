@@ -9,9 +9,9 @@ int main(){
     do{
         system("Title Juego de la Nave Espacial");
         ocultar_cursor();
-        menu();
+        menu_inicio();
         tecla = getch();
-    }while(tecla != '1' && tecla != ESC);
+    }while(tecla != '1' && tecla != '2' && tecla != ESC);
 
     switch(tecla){
         //Caso ESC.
@@ -24,23 +24,68 @@ int main(){
             system("cls");
             Sleep(30);
 
+        //Loop principal.
         while(num_vidas > 0){
             ocultar_cursor();
-            mover_nave(ix, iy);
+            mover_nave(ix, iy, tecla);
             asteroides( ix, iy, num_vidas, corazones);
             cambio_nivel(ix, iy, nivel, repeticion);
-            mover_nave(ix, iy);
+            mover_nave(ix, iy, tecla);
             vidas(num_vidas);
             barra_de_salud(corazones);
-            game_over(ix, iy, num_vidas, corazones, nivel, repeticion);
             gotoxy(55,1); printf("NIVEL %i",nivel);
-        }
+
+            if(tecla == ARRIBA){
+                menu_pausa();
+                tecla = getch();
+                switch(tecla){
+                    case '1':
+                        reiniciar_partida(ix, iy, num_vidas, corazones, nivel, repeticion);
+                    break;
+
+                    case '2':
+                        system("cls");
+                        inicializando_variables(ix, iy, num_vidas, corazones, nivel, repeticion);
+                        return main();
+                    break;
+                    
+                    case ESC:
+                        pantalla_final();
+                        return 0;
+                    break;
+                }
+                system("cls");
+            }
+            if(num_vidas == 0){
+                menu_game_over();
+                tecla = getch();
+                switch(tecla){
+                    case '1':
+                        reiniciar_partida(ix, iy, num_vidas, corazones, nivel, repeticion);
+                        break;
+
+                    case '2':
+                        system("cls");
+                        inicializando_variables(ix, iy, num_vidas, corazones, nivel, repeticion);
+                        return main();
+                    break;
+
+                    case ESC:
+                        pantalla_final();
+                        return 0;
+                    break;
+                }
+            }
+        }//Fin del while.
         break;  //Fin del caso '1'.
+
+        case '2':
+            menu_controles();
+            getch();
+            return main();
+        break;
+
     }//Fin del Switch.
-    system("cls");
-    pintar_marco();
-    gotoxy(51,13); printf("Gracias por jugar!");
-    gotoxy(34,14); printf("Presiona cualquier tecla para finalizar el programa.");
-	system("pause > NULL");     //System("pause") nos funciona para que el programa se pause y no se cierre solo.
+    pantalla_final();
 	return 0;
 }

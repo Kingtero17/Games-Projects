@@ -11,8 +11,12 @@ dara error al compilar.
 //Declarando funciones.
 void gotoxy(int x,int y);
 void ocultar_cursor();
-void menu();
+void menu_inicio();
 void pintar_marco();
+void menu_controles();
+void menu_pausa();
+void menu_game_over();
+void pantalla_final();
 
 
 //Definiendo las funciones.
@@ -41,7 +45,7 @@ void ocultar_cursor(){
 
 
 //Pantalla de inicio del juego.
-void menu(){
+void menu_inicio(){
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
 		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
@@ -67,9 +71,9 @@ void menu(){
 	"            ******  ******  ******  *       ******  *        *         *         *       *              *    ",
 	"  *   *     *       *       *    *  *       *            *      *         *   *      *       *    *        * ",
 	"            ******  *       *    *  ******  ******         *        *                                *       ",
-	"     *                    *      *        *        *                     -PRESIONE 1 PARA JUGAR.            *",
-	"  *     *  |     *    *                                     *    *       -PRESIONE ESC PARA SALIR.      *    ",
-	"     *     |  *           *    ee    *   *       *     |                       *         *                   ",
+	"     *                    *    *          *        *                     -PRESIONE 1 PARA JUGAR.            *",
+	"  *     *  |     *    *                                     *    *       -PRESIONE 2 PARA VER CONTROLES.  *  ",
+	"     *     |  *           *    ee    *   *       *     |                 -PRESIONE ESC PARA SALIR.           ",
 	"         | |      *     *     eeee           *         | |   *           *        *             *    *   *  *",
 	"  *  *   | |              *   eeee      *              | |         *          *          *                   ",
 	"         |    1111                            1111       | *    *                   *        *      *    *   ",
@@ -107,4 +111,40 @@ void pintar_marco(){
     gotoxy(2,28);  printf("%c",200);
     gotoxy(117,2); printf("%c",187);
     gotoxy(117,28);printf("%c",188);
+}
+
+//Menu controles.
+void menu_controles(){
+	system("cls");
+	pintar_marco();
+	gotoxy(53, 11);printf("CONTROLES:");
+	gotoxy(40, 13);printf("MOVER DERECHA:    Flecha Derecha   %c", 16);
+	gotoxy(40, 14);printf("MOVER IZQUIERDA:  Flecha Izquierda %c", 17);
+	gotoxy(40, 15);printf("PAUSAR JUEGO:     Flecha Arriba    %c", 30);
+	gotoxy(30, 17);printf("-Presione cualquier tecla para volver al menu de inicio.");
+}
+
+//Menu de pausa del juego.
+void menu_pausa(){
+	gotoxy(56, 7); printf("PAUSE");
+	gotoxy(29, 9); printf("SALIR:              Presione ESC para salir.");
+	gotoxy(29, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
+	gotoxy(29, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
+	gotoxy(29, 12);printf("REANUDAR PARTIDA:   Presione cualquier tecla para reanudar la partida.");
+}
+
+void menu_game_over(){
+	gotoxy(29, 14);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
+    gotoxy(29, 15);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
+    gotoxy(29, 16);printf("SALIR:              Presione ESC para salir.");
+}
+
+
+//Pantalla final del juego.
+void pantalla_final(){
+	system("cls");
+    pintar_marco();
+    gotoxy(51,13);printf("Gracias por jugar!");
+    gotoxy(34,14);printf("Presione cualquier tecla para finalizar el programa.");
+	system("pause > NULL");   //System("pause") nos funciona para que el programa se pause y no se cierre solo.
 }

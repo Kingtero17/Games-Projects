@@ -4,10 +4,11 @@
 #include"Interfaz.h"
 
 
-//Definiendo teclas flecha izquierda y derecha para mover la nave espacial, y la tecla "ESC" pora salir.
+//Definiendo teclas flecha izquierda y derecha para mover la nave espacial, flecha arriba para pausar el juego y la tecla "ESC" pora salir.
 #define ESC 27
 #define IZQUIERDA 75
 #define DERECHA 77
+#define ARRIBA	72
 
 
 char avion_11[]={' ',' ',' ','*',' ',' ',' ',0};        //Nave Espacial.
@@ -53,10 +54,10 @@ void vidas(int &num_vidas);
 void barra_de_salud(int &corazones);
 void explosion(void);
 void asteroides(int &ix, int &iy, int &num_vidas, int &corazones);
-void mover_nave(int &ix, int &iy);
+void mover_nave(int &ix, int &iy, char &tecla);
 void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion);
-void game_over(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
-void reiniciar_nivel(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
+void reiniciar_partida(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
+void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
 
 
 //Definiendo funciones.
@@ -223,7 +224,7 @@ void asteroides(int &ix, int &iy, int &num_vidas, int &corazones){
 }
 
 //Funcion mover nave espacial.
-void mover_nave(int &ix, int &iy){
+void mover_nave(int &ix, int &iy, char &tecla){
     /*Funcion "kbhit" indica que si se detecta una tecla,
     el programa procese esa tecla y no se detenga el programa.
     Con "tecla = getch" le indicamos al programa esté atento para
@@ -231,7 +232,7 @@ void mover_nave(int &ix, int &iy){
     se la pase a la variable tecla.*/
 
     if(kbhit()){
-        unsigned char tecla = getch();
+        tecla = getch();
         switch(tecla){
             case IZQUIERDA:
                 if(ix > 4){
@@ -295,40 +296,37 @@ void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
 }
 
 
-void game_over(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
-    if(num_vidas == 0){
-		gotoxy(39, 14);printf("-Presione 2 para reiniciar la partida.");
-        gotoxy(47, 15);printf("-Presione ESC para salir.");
-        reiniciar_nivel(ix, iy, num_vidas, corazones, nivel, repeticion);
-    }
+void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
+    
+    //Asignamos valores de reinicio.
+    ix = 54;
+    iy = 19;
+    num_vidas = 3;
+    corazones = 3;
+    nivel = 1;
+    repeticion = 0;
 }
+
 
 //Reiniciar nivel.
-void reiniciar_nivel(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
-    char tecla;
-    tecla = getch();
+void reiniciar_partida(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
+    //Borramos pantalla.
+    system("cls");
 
-    switch(tecla){
-        case '2':
-            system("cls");
+    //Borramos nave.
+    gotoxy(ix,iy);  puts(borrar_avion);
+    gotoxy(ix,iy+1);puts(borrar_avion);
+    gotoxy(ix,iy+2);puts(borrar_avion);
 
-            //Asignamos valores de reinicio.
-            ix = 54;
-            iy = 19;
-            num_vidas = 3;
-            corazones = 3;
-            nivel = 1;
-            repeticion = 0;
-            
-            //Imprimir vidas y corazones.
-            vidas(num_vidas);
-            barra_de_salud(corazones);
+    //Asignamos valores de reinicio.
+    inicializando_variables(ix, iy, num_vidas, corazones, nivel, repeticion);
 
-            //Imprimir nave.
-            gotoxy(ix,iy);  puts(avion_11);
-            gotoxy(ix,iy+1);puts(avion_12);
-            gotoxy(ix,iy+2);puts(avion_13);
-        break;
-    }
+    //Imprimir vidas y corazones.
+    vidas(num_vidas);
+    barra_de_salud(corazones);
+
+    //Imprimir nave.
+    gotoxy(ix,iy);  puts(avion_11);
+    gotoxy(ix,iy+1);puts(avion_12);
+    gotoxy(ix,iy+2);puts(avion_13);
 }
-
