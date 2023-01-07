@@ -55,6 +55,7 @@ void barra_de_salud(int &corazones);
 void explosion(void);
 void asteroides(int &ix, int &iy, int &num_vidas, int &corazones);
 void mover_nave(int &ix, int &iy, char &tecla);
+void imprimir_nivel(int &nivel);
 void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion);
 void reiniciar_partida(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
 void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion);
@@ -62,7 +63,7 @@ void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, i
 
 //Definiendo funciones.
 void vidas(int &num_vidas){
-    gotoxy(2,1);                    //Gotoxy funciona con el eje "x,y".
+    gotoxy(2,1);                        //Gotoxy funciona con el eje "x,y".
     printf("VIDAS %d", num_vidas);      //Printf("%d", variable a imprimir).
 }
 
@@ -269,6 +270,10 @@ void mover_nave(int &ix, int &iy, char &tecla){
     }//Fin del if.
 }
 
+void imprimir_nivel(int &nivel){
+    gotoxy(55,1);               //Gotoxy funciona con el eje "x,y".
+    printf("NIVEL %i",nivel);   //Printf("%d", variable a imprimir).
+}
 
 void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
     //Cambio de nivel.
