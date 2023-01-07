@@ -4,15 +4,15 @@
 
 /*
 La libreria debe de tener el mismo nombre con el
-cual se guardara el archivo,porque en caso contrario
+cual se guardara el archivo, en caso contrario
 dara error al compilar.
 */
 
 //Declarando funciones.
 void gotoxy(int x,int y);
 void ocultar_cursor();
-void menu_inicio();
 void pintar_marco();
+void menu_inicio();
 void menu_controles();
 void menu_pausa();
 void menu_game_over();
@@ -43,6 +43,24 @@ void ocultar_cursor(){
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 }
 
+//Marco del juego.
+void pintar_marco(){
+	//Lineas Horizontales.
+	for(int i = 2; i < 118; i++){
+		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(i, 28);printf("%c",205);
+	}
+	//Lineas Verticales.
+	for(int i = 2; i < 29; i++){
+		gotoxy(2, i);  printf("%c",186);	//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(117, i);printf("%c",186);
+	}
+    //Esquinas
+    gotoxy(2,2);   printf("%c",201);
+    gotoxy(2,28);  printf("%c",200);
+    gotoxy(117,2); printf("%c",187);
+    gotoxy(117,28);printf("%c",188);
+}
 
 //Pantalla de inicio del juego.
 void menu_inicio(){
@@ -94,25 +112,6 @@ void menu_inicio(){
 	}
 }
 
-//Marco del juego.
-void pintar_marco(){
-	//Lineas Horizontales.
-	for(int i = 2; i < 118; i++){
-		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
-		gotoxy(i, 28);printf("%c",205);
-	}
-	//Lineas Verticales.
-	for(int i = 2; i < 29; i++){
-		gotoxy(2, i);  printf("%c",186);
-		gotoxy(117, i);printf("%c",186);
-	}
-    //Esquinas
-    gotoxy(2,2);   printf("%c",201);
-    gotoxy(2,28);  printf("%c",200);
-    gotoxy(117,2); printf("%c",187);
-    gotoxy(117,28);printf("%c",188);
-}
-
 //Menu controles.
 void menu_controles(){
 	system("cls");
@@ -133,12 +132,13 @@ void menu_pausa(){
 	gotoxy(29, 12);printf("REANUDAR PARTIDA:   Presione cualquier tecla para reanudar la partida.");
 }
 
+//Menu Game over.
 void menu_game_over(){
-	gotoxy(29, 14);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
-    gotoxy(29, 15);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
-    gotoxy(29, 16);printf("SALIR:              Presione ESC para salir.");
-}
+	gotoxy(29, 9);printf("SALIR:              Presione ESC para salir.");
+	gotoxy(29, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
+    gotoxy(29, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
 
+}
 
 //Pantalla final del juego.
 void pantalla_final(){
