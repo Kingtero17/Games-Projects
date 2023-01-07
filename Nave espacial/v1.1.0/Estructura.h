@@ -67,6 +67,7 @@ void vidas(int &num_vidas){
     printf("VIDAS %d", num_vidas);      //Printf("%d", variable a imprimir).
 }
 
+//Barra de Salud.
 void barra_de_salud(int &corazones){
     gotoxy(110,1);printf(" ");
     gotoxy(111,1);printf(" ");
@@ -108,7 +109,7 @@ void explosion(void){
 }
 
 
-
+//Comportamiento de los asteroides.
 void asteroides(int &ix, int &iy, int &num_vidas, int &corazones){
     //Mecanicas de los asteriodes.
     gotoxy(x,y);  printf("%c", 1);
@@ -207,11 +208,12 @@ void asteroides(int &ix, int &iy, int &num_vidas, int &corazones){
         corazones --;
         barra_de_salud(corazones);
     }
-
+    //Imprimimos la nave, sino se borraria con la colision de los asteroides.
     gotoxy(ix,iy);  puts(avion_11);
     gotoxy(ix,iy+1);puts(avion_12);
     gotoxy(ix,iy+2);puts(avion_13);
 
+    //Loop corazones.
     if(corazones == 0){     //(!corazones).
         num_vidas --;
         corazones = 3;
@@ -224,7 +226,7 @@ void asteroides(int &ix, int &iy, int &num_vidas, int &corazones){
     y++; yy++; y1++; y2++; y3++; y4++; y5++; y6++; y7++; y8++;
 }
 
-//Funcion mover nave espacial.
+//Mover nave espacial.
 void mover_nave(int &ix, int &iy, char &tecla){
     /*Funcion "kbhit" indica que si se detecta una tecla,
     el programa procese esa tecla y no se detenga el programa.
@@ -270,11 +272,13 @@ void mover_nave(int &ix, int &iy, char &tecla){
     }//Fin del if.
 }
 
+//Nivel.
 void imprimir_nivel(int &nivel){
     gotoxy(55,1);               //Gotoxy funciona con el eje "x,y".
     printf("NIVEL %i",nivel);   //Printf("%d", variable a imprimir).
 }
 
+//Cambiar nivel.
 void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
     //Cambio de nivel.
     if(!condicion){
@@ -282,6 +286,7 @@ void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
     condicion = true;
     }
 
+    //loop principal del cambio de nivel.
     if(repeticion == 20){
         nivel++;
         gotoxy(55,1);printf("NIVEL %i",nivel);
@@ -298,11 +303,15 @@ void cambio_nivel(int &ix, int &iy, int &nivel, int &repeticion){
         
         repeticion = 0;
     }
+    /*
+        La nave estara mas cerca de la posicion inicial de los asteroides,
+        lo cual hara que el usuario tenga menos tiempo de reaccion; haciendo 
+        asi, el juego mas dificil.
+    */
 }
 
-
-void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
-    
+//Inicializacion de variables.
+void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){  
     //Asignamos valores de reinicio.
     ix = 54;
     iy = 19;
@@ -312,8 +321,7 @@ void inicializando_variables(int &ix, int &iy, int &num_vidas, int &corazones, i
     repeticion = 0;
 }
 
-
-//Reiniciar nivel.
+//Reiniciar partida.
 void reiniciar_partida(int &ix, int &iy, int &num_vidas, int &corazones, int &nivel, int &repeticion){
     //Borramos pantalla.
     system("cls");
