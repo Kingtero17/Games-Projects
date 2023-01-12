@@ -2,269 +2,277 @@
 #include <iostream>
 #include <conio.h>
 
+//Definiendo teclas.
 #define ARRIBA		72
-#define IZQUIERDA	75	//Aqui estamos definiendo las teclas para poder movernos en el juego.
+#define IZQUIERDA	75
 #define DERECHA		77
 #define ABAJO		80
 #define ESC			27
 
-//Aqui estamos definiendo los prototipos de las funciones que hace que el juego funcione.
-void Teclear();
-void Borrar_cuerpo(int &n);
-void Dibujar_cuerpo(int &Tam);
-void Borrar_guardado(int &Tam);
-void Guardar_posicion(int &x, int &y, int &n, int &Tam); 
-void Cambiar_velocidad(int &Velocidad);
-void Comida(int &xc, int &yc, int &score,int &Tam, int &Velocidad);
-void Reiniciar_Partida(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h);
-bool Game_over(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h);
-void Puntaje(int &score);
+//Declarando funciones principales.
+void dibujar_cuerpo(int &tam);
+void guardar_posicion(int &posx, int &posy, int &n, int &tam);
+void borrar_cuerpo(int &n);
+void borrar_guardado(int &tam);
+void teclear();
+void cambiar_velocidad(int &velocidad);
+void comida(int &tam, int &posx_c, int &posy_c, int &score, int &velocidad);
+void puntaje(int &score);
+void reiniciar_partida(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h);
+bool game_over(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h);
 
-//Aqui estamos definiendo los prototipos de las funcioenes mas tecnicas (Funciones principales de la interfaz).
-void Menu_Juego();
-void Pintar_Marco();
-void gotoxy (int x, int y);
-void Ocultar_Cursor();
 
-//Aqui estamos inicializando todas las variables que usaremos en todo el programa.
-int Cuerpo[200][2];
+//Declarando funciones interfaz.
+void gotoxy(int x, int y);
+void ocultar_cursor();
+void pintar_marco();
+void menu_inicio();
+
+//Inicializando variables.
+int cuerpo[200][2];
+int posx = 10, posy = 12;
 int n = 1;
-int Tam = 3;
-int x = 10, y = 12;
-int Dir = 3;
-int xc = 30, yc = 15;
-int Velocidad = 100, h = 1;
+int tam = 3;
+int dir = 3;
+int posx_c = 30, posy_c = 15;
 int score = 0;
-char Tecla;
+int velocidad = 100, h = 1;
+
 
 int main (){
-
-	//Llamando a las funciones principales de la interfaz 
-
+	//Menu inicio. 
 	system("Title Juego de la Snake");
-	Ocultar_Cursor();
-	Menu_Juego();
+	ocultar_cursor();
+	menu_inicio();
 
-	//Esperamos que la persona presione una tecla, dependiendo de la tecla se ejecutara el juego o se saldra del programa.
-	Tecla = getch();
+	char tecla;
+	tecla = getch();
 
-
-	switch(Tecla){
-
+	switch(tecla){
+		//Caso ESC.
 		case ESC :
 			return 0;
-		break; // Corte del caso 'ESC'.
+		break;	//Fin del caso 'ESC'.
 
-
+		//Caso 'd'.
 		case 'd':
 			system("cls");
 			Sleep(100);
-			Ocultar_Cursor();
-			Pintar_Marco();
-			gotoxy(xc, yc); printf("%c", 4);
+			ocultar_cursor();
+			pintar_marco();
+			gotoxy(posx_c, posy_c);printf("%c", 4);
 
-			while(Tecla != ESC && Game_over(n, Tam, x, y, xc, yc, Dir, score, Velocidad, h)){
-				Borrar_cuerpo(n);
-				Guardar_posicion(x, y, n, Tam);
-				Dibujar_cuerpo(Tam);
-				Dibujar_cuerpo(Tam);
+			while(tecla != ESC && game_over(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h)){
+				teclear();
+				borrar_cuerpo(n);
+				guardar_posicion(posx, posy, n, tam);
+				dibujar_cuerpo(tam);
+				dibujar_cuerpo(tam);
+				comida( tam, posx_c, posy_c, score, velocidad);
+				puntaje(score);
+				teclear();
 
-				Comida(xc, yc, score, Tam, Velocidad);
+				if(dir == 1)posy--;
+				if(dir == 2)posy++;
+				if(dir == 3)posx++;
+				if(dir == 4)posx--;
 
-				Puntaje(score);
-
-				Teclear();
-				Teclear();
-
-				if(Dir == 1) y--;
-				if(Dir == 2) y++;
-				if(Dir == 3) x++;
-				if(Dir == 4) x--;
-
-				Sleep(Velocidad);
-			}//Termina el While.
-
-			Pintar_Marco();
-		break;//Corte del caso 'd'.
-	}//Termina el Swicth.
+				Sleep(velocidad);
+			}//Fin del While.
+			pintar_marco();
+		break;//Fin del caso 'd'.
+	}//Fin del Swicth.
 
 	system("cls");
-	Pintar_Marco();
-	gotoxy(51,13); printf("Gracias por jugar!");
-	gotoxy(34,14); printf("Presiona cualquier tecla para finalizar el programa.");
+	pintar_marco();
+	gotoxy(51,13);printf("Gracias por jugar!");
+	gotoxy(34,14);printf("Presione cualquier tecla para finalizar el programa.");
 	system("pause > NULL");		//El system ("pause") nos sirve para que el programa se pause y no se cierre solo.
 	return 0;
 }
 
-/*Desde este punto empezamos a definir todas las funciones, tanto como del juego,
-como las funciones que tienen que ver con la interfaz.*/
 
-void Guardar_posicion(int &x, int &y, int &n, int &Tam){
-	Cuerpo[n][0] = x ;
-	Cuerpo[n][1] = y ;
+//Definiendo funciones principales.
+void dibujar_cuerpo(int &tam){
+	if(posx > 2 && posx < 117 && posy > 2 && posy < 28){	
+		for(int i = 1; i < tam; i++){
+			gotoxy(cuerpo[i][0], cuerpo[i][1]);printf("*");
+		}
+	}
+}
+
+void guardar_posicion(int &posx, int &posy, int &n, int &tam){
+	cuerpo[n][0] = posx;
+	cuerpo[n][1] = posy;
 	n ++;
-	if( n == Tam ){
+	if(n == tam){
 		n = 1;
-    }
-}
-
-void Dibujar_cuerpo(int &Tam){
-	if(x > 2 && x < 117 && y > 2 && y < 28){	
-		for (int i = 1; i < Tam; i++){
-			gotoxy(Cuerpo[i][0] , Cuerpo[i][1]); printf("*");
-		}
 	}
 }
 
-void Borrar_cuerpo(int &n){
-	gotoxy(Cuerpo[n][0] , Cuerpo[n][1]); printf(" ");
+void borrar_cuerpo(int &n){
+	gotoxy(cuerpo[n][0], cuerpo[n][1]);printf(" ");
 }
 
-void Borrar_guardado(int &Tam){
-	for (int i = 1; i < Tam; i++){
-		gotoxy(Cuerpo[i][0] , Cuerpo[i][1]); printf(" ");
+void borrar_guardado(int &tam){
+	for (int i = 1; i < tam; i++){
+		gotoxy(cuerpo[i][0] , cuerpo[i][1]);printf(" ");
     }
 }
 
-void Teclear(){
-    //Moviento de la serpiente.
-
+void teclear(){
+	//Moviento de la serpiente.
+	char tecla;
 	if(kbhit()){
-		Tecla = getch();
-		switch (Tecla){
-
+		tecla = getch();
+		switch(tecla){
+			//Caso ARRIBA.
 			case ARRIBA:
-				if(y > 2)
-				if(Dir != 2)
-				Dir = 1;
-			break;
+				if(posy > 2)
+				if(dir != 2)
+				dir = 1;
+			break;	//Fin del caso ARRIBA.
 
+			//Caso ABAJO.
 			case ABAJO:
-				if(y < 28) 
-				if(Dir != 1)
-				Dir = 2;
-			break;
+				if(posy < 28) 
+				if(dir != 1)
+				dir = 2;
+			break;	//Fin del caso ABAJO.
 
+			//Caso DERECHA.
 			case DERECHA:
-				if(x < 117) 
-				if(Dir != 4)
-				Dir = 3;
-			break;
+				if(posx < 117) 
+				if(dir != 4)
+				dir = 3;
+			break;	//Fin del caso DERECHA.
 
+			//Caso IZQUIERDA.
 			case IZQUIERDA:
-				if(x > 2)
-				if(Dir != 3)
-				Dir = 4;
-			break;
+				if(posx > 2)
+				if(dir != 3)
+				dir = 4;
+			break;	//Fin del caso IZQUIERDA.
 		}
 	}
 }
 
-void Cambiar_velocidad(int &Velocidad){
-	if (score == h*20){
-		Velocidad -= 5;
+void cambiar_velocidad(int &velocidad){
+	if(score == h * 20){
+		velocidad -= 5;
 		h++;
 	}
 }
 
-void Comida(int &xc, int &yc, int &score,int &Tam, int &Velocidad){
-	if(x == xc && y == yc){
-
-		xc = (rand()%112) + 4;
-		yc = (rand()%23 ) + 4;
-
-		Tam++;
+void comida(int &tam, int &posx_c, int &posy_c, int &score, int &Velocidad){
+	if(posx == posx_c && posy == posy_c){
+		posx_c = (rand()%112) + 4;
+		posy_c = (rand()%23 ) + 4;
+		tam++;
 		score += 10;
-		gotoxy (xc,yc); printf ("%c",4);
-
-		Cambiar_velocidad(Velocidad);
+		gotoxy(posx_c, posy_c);printf("%c",4);
+		cambiar_velocidad(velocidad);
 	}
 }
 
-
-void Puntaje(int &score){
-gotoxy ( 3, 1); printf("score %d",score);
+void puntaje(int &score){
+	gotoxy(3, 1);printf("score %d",score);
 }
 
-
-void Reiniciar_Partida(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score,int &Velocidad, int &h){
-
-	Tecla = getch();
-	if(Tecla == 'a'){
-
+void reiniciar_partida(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score,int &velocidad, int &h){
+	char tecla;
+	tecla = getch();
+	if(tecla == 'a'){
 		gotoxy(39, 14);
 		printf("                                      ");
 		gotoxy(47, 15);
 		printf("                         ");
-
-		Borrar_guardado(Tam);
+		borrar_guardado(tam);
 		n = 1;
-		Tam = 3;
-		x = 10, y = 12;
-		Dir = 3; 
-		Velocidad = 100, 
+		tam = 3;
+		posx = 10, posy = 12;
+		dir = 3; 
+		velocidad = 100, 
 		h = 1;
 		score = 0;
 
-		gotoxy (xc,yc); printf (" ",4);
-		gotoxy (xc,yc); printf ("%c",4);
-		gotoxy ( 3, 1); printf("score    ");
-		Pintar_Marco();
+		gotoxy(posx_c, posy_c);printf(" ",4);
+		gotoxy(posx_c,posy_c);printf("%c",4);
+		gotoxy(3, 1);printf("score    ");
+		pintar_marco();
 	}
 }
 
-bool Game_over(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h){
-
-	if(y == 2 || y == 28 || x == 2 || x == 117 ){
-	
-		gotoxy(39, 14);
-        printf("-Presione A para reiniciar la partida.");
-        gotoxy(47, 15);
-        printf("-Presione ESC para salir.");
-        
-		Reiniciar_Partida(n, Tam, x, y, xc, yc, Dir, score, Velocidad, h);
+bool game_over(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h){
+	if(posy == 2 || posy == 28 || posx == 2 || posx == 117 ){
+		gotoxy(39, 14);printf("-Presione A para reiniciar la partida.");
+		gotoxy(47, 15);printf("-Presione ESC para salir.");
+		reiniciar_partida(posx, posy, n, tam,  posx_c, posy_c, dir, score, velocidad, h);
 	}
-
-	for(int a = Tam - 1; a > 0; a--){
-		if(Cuerpo[a][0] == x && Cuerpo[a][1] == y){
-
-            gotoxy(39, 14);
-            printf("-Presione A para reiniciar la partida.");
-			gotoxy(47, 15);
-            printf("-Presione ESC para salir.");
-
-			Reiniciar_Partida(n, Tam, x, y, xc, yc, Dir, score, Velocidad, h);
-        }
+	for(int a = tam - 1; a > 0; a--){
+		if(cuerpo[a][0] == posx && cuerpo[a][1] == posy){
+			gotoxy(39, 14);printf("-Presione A para reiniciar la partida.");
+			gotoxy(47, 15);printf("-Presione ESC para salir.");
+			reiniciar_partida(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h);
+		}
 	}
 	return true;
 }
 
-//A partir de aqui estamo definiendo las funciones declaradas de la interfaz.
-void Menu_Juego(){
+//Declarando funciones interfaz.
+void gotoxy(int x, int y){
+	HANDLE hCon;
+	COORD dwPos;
+	dwPos.X = x;
+	dwPos.Y = y;
+	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hCon,dwPos);
+}
 
-	//Marco de la Pantalla de inicio del juego.
+//Ocultar cursor.
+void ocultar_cursor(){
+	CONSOLE_CURSOR_INFO cci = {100, FALSE};
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
+}
 
+//Marco de la pantalla.
+void pintar_marco(){
+	//Lineas horizontales.
+	for(int i = 2; i < 118; i++){
+		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(i, 28);printf("%c",205);
+	}
+	//Lineas verticales.
+	for(int i = 2; i < 29; i++){
+		gotoxy(2, i);  printf("%c",186);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(117, i);printf("%c",186);
+	}
+    //Esquinas.
+    gotoxy(2,2);   printf("%c",201);
+    gotoxy(2,28);  printf("%c",200);
+    gotoxy(117,2); printf("%c",187);
+    gotoxy(117,28);printf("%c",188);
+}
+
+//Menu inicio.
+void menu_inicio(){
 	//Lineas Horizontales.
 	for(int i = 2; i < 118; i++){
-		gotoxy(i, 2);
-		printf("%c",205);		//Se coloca (%c,y aqui el numero en codigo ASCII).
-		gotoxy(i, 28);
-		printf("%c",205);
+		gotoxy(i, 2); printf("%c",205);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(i, 28);printf("%c",205);
 	}
 	//Lineas Verticales.
 	for(int i = 2; i < 29; i++){
-		gotoxy(2, i);
-		printf("%c",186);		//Se coloca (%c,y aqui el numero en codigo ASCII).
-		gotoxy(117, i);
-		printf("%c",186);
+		gotoxy(2, i);  printf("%c",186);		//Printf("%c", simbolo en codigo ASCII).
+		gotoxy(117, i);printf("%c",186);
 	}
-    //Esquinas.
-    gotoxy(2,2); printf ("%c",201);
-    gotoxy(2,28); printf ("%c",200);
-    gotoxy(117,2); printf ("%c",187);
-    gotoxy(117,28); printf ("%c",188);
+	//Esquinas.
+	gotoxy(2,2);   printf("%c",201);
+	gotoxy(2,28);  printf("%c",200);
+	gotoxy(117,2); printf("%c",187);
+	gotoxy(117,28);printf("%c",188);
 
-char Portada [22][111] =		//112 - 2 = 110 en le eje "x" y 21 de en el eje "y".
+char menu_inicio[22][111] =		//112 - 2 = 110 en le eje "x" y 21 de en el eje "y".
 {
 "        aaaaaaaaaaaa  aa         aa      aaaa      aa       aa aaaaaaaaaaaa                                   ",
 "                  aa  aaa        aa    aaaaaaaa    aa    aa    aa                                             ",	
@@ -289,51 +297,9 @@ char Portada [22][111] =		//112 - 2 = 110 en le eje "x" y 21 de en el eje "y".
 "     *************************************                                                                    ",	
 
 };
-
-
 	for(int i = 0 ; i < 21; i++){
 		for(int j = 0; j < 109; j++){
-			gotoxy(j + 5, i + 5); printf("%c", Portada[i][j]);
+			gotoxy(j + 5, i + 5);printf("%c", menu_inicio[i][j]);
 		}
 	}
-}
-
-
-void Pintar_Marco(){
-	//Marco de la Pantalla de inicio del juego.
-
-	//Lineas Horizontales.
-	for(int i = 2; i < 118; i++){
-		gotoxy(i, 2);
-		printf("%c",205);		//Se coloca (%c,y aqui el numero en codigo ASCII).
-		gotoxy(i, 28);
-		printf("%c",205);
-	}
-	//Lineas Verticales.
-	for(int i = 2; i < 29; i++){
-		gotoxy( 2, i);
-		printf("%c",186);		//Se coloca (%c,y aqui el numero en codigo ASCII).
-		gotoxy( 117, i);
-		printf("%c",186);
-	}
-    //Esquinas.
-        gotoxy(2,2); printf ("%c",201);
-        gotoxy(2,28); printf ("%c",200);
-        gotoxy(117,2); printf ("%c",187);
-        gotoxy(117,28); printf ("%c",188);
-
-}
-
-void gotoxy ( int x, int y){
-	HANDLE hCon;
-	COORD dwPos;
-	dwPos.X = x;
-	dwPos.Y = y;
-	hCon = GetStdHandle( STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(hCon,dwPos);
-}
-
-void Ocultar_Cursor(){
-	CONSOLE_CURSOR_INFO cci = {100, FALSE};
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
 }
