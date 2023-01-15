@@ -62,6 +62,7 @@ int main (){
 			pintar_marco();
 			gotoxy(posx_c, posy_c);printf("%c", 4);
 
+			//Loop principal.
 			while(tecla != ESC && game_over(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h)){
 				teclear();
 				borrar_cuerpo(n);
@@ -71,7 +72,8 @@ int main (){
 				comida( tam, posx_c, posy_c, score, velocidad);
 				puntaje(score);
 				teclear();
-
+				
+				//Direccion de movimiento.
 				if(dir == 1)posy--;
 				if(dir == 2)posy++;
 				if(dir == 3)posx++;
@@ -83,6 +85,7 @@ int main (){
 		break;//Fin del caso 'd'.
 	}//Fin del Swicth.
 
+	//Menu final.
 	system("cls");
 	pintar_marco();
 	gotoxy(51,13);printf("Gracias por jugar!");
@@ -94,14 +97,16 @@ int main (){
 
 //Definiendo funciones principales.
 void dibujar_cuerpo(int &tam){
-	if(posx > 2 && posx < 117 && posy > 2 && posy < 28){	
+	if(posx > 2 && posx < 117 && posy > 2 && posy < 28){	//Limites del juego.
 		for(int i = 1; i < tam; i++){
-			gotoxy(cuerpo[i][0], cuerpo[i][1]);printf("*");
+			gotoxy(cuerpo[i][0], cuerpo[i][1]);printf("*");	//Imprimimos en un arreglo bidimensional.
 		}
 	}
 }
 
+//Guardar cuerpo.
 void guardar_posicion(int &posx, int &posy, int &n, int &tam){
+	// Guardamos las posiciones en el arreglo.
 	cuerpo[n][0] = posx;
 	cuerpo[n][1] = posy;
 	n ++;
@@ -110,16 +115,20 @@ void guardar_posicion(int &posx, int &posy, int &n, int &tam){
 	}
 }
 
+//Borrar cuerpo.
 void borrar_cuerpo(int &n){
-	gotoxy(cuerpo[n][0], cuerpo[n][1]);printf(" ");
+	gotoxy(cuerpo[n][0], cuerpo[n][1]);printf(" ");	//Imprimimos un caracter vacio en un arreglo bidimensional.
 }
 
+//Borrar guardado.
 void borrar_guardado(int &tam){
+	//Borrara la cola de la Snake.
 	for (int i = 1; i < tam; i++){
 		gotoxy(cuerpo[i][0] , cuerpo[i][1]);printf(" ");
     }
 }
 
+//Control de movimiento.
 void teclear(){
 	//Moviento de la serpiente.
 	char tecla;
@@ -157,6 +166,7 @@ void teclear(){
 	}
 }
 
+//Cambio de velocidad.
 void cambiar_velocidad(int &velocidad){
 	if(score == h * 20){
 		velocidad -= 5;
@@ -164,6 +174,7 @@ void cambiar_velocidad(int &velocidad){
 	}
 }
 
+//Comida.
 void comida(int &tam, int &posx_c, int &posy_c, int &score, int &Velocidad){
 	if(posx == posx_c && posy == posy_c){
 		posx_c = (rand()%112) + 4;
@@ -175,14 +186,16 @@ void comida(int &tam, int &posx_c, int &posy_c, int &score, int &Velocidad){
 	}
 }
 
+//Score.
 void puntaje(int &score){
 	gotoxy(3, 1);printf("score %d",score);
 }
 
+//Reinico de partida.
 void reiniciar_partida(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score,int &velocidad, int &h){
 	char tecla;
 	tecla = getch();
-	if(tecla == 'a'){
+	if(tecla == 'a' || 'A'){
 		gotoxy(39, 14);
 		printf("                                      ");
 		gotoxy(47, 15);
@@ -203,12 +216,15 @@ void reiniciar_partida(int &posx, int &posy, int &n, int &tam, int &posx_c, int 
 	}
 }
 
+//Game over.
 bool game_over(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h){
+	//Opcion: Choque con los limites del juego.
 	if(posy == 2 || posy == 28 || posx == 2 || posx == 117 ){
 		gotoxy(39, 14);printf("-Presione A para reiniciar la partida.");
 		gotoxy(47, 15);printf("-Presione ESC para salir.");
 		reiniciar_partida(posx, posy, n, tam,  posx_c, posy_c, dir, score, velocidad, h);
 	}
+	//Opcion: Comerte a ti mismo.
 	for(int a = tam - 1; a > 0; a--){
 		if(cuerpo[a][0] == posx && cuerpo[a][1] == posy){
 			gotoxy(39, 14);printf("-Presione A para reiniciar la partida.");
