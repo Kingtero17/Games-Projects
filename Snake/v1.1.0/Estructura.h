@@ -1,241 +1,214 @@
-#include <iostream>
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
 #include "Interfaz.h"
 
+//Definiendo teclas para el movimiento.
 #define ARRIBA		72
-#define IZQUIERDA 	75	//Aqui estamos definiendo las teclas para poder movernos en el juego.
+#define IZQUIERDA 	75
 #define DERECHA		77
 #define ABAJO		80
 #define ESC			27
 
-//Aqui estamos definiendo los prototipos de las funciones que hace que el juego funcione.
-void Teclear();
-void Borrar_cuerpo(int &n);
-void Dibujar_cuerpo(int &Tam);
-void Borrar_guardado(int &Tam);
-void Guardar_posicion(int &x, int &y, int &n, int &Tam); 
-void Cambiar_velocidad(int &Velocidad);
-void Comida(int &xc, int &yc, int &score,int &Tam, int &Velocidad);
-void Reiniciar_Partida(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h);
-bool Game_over(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h);
-void Puntaje(int &score);
-void Mejor_Puntaje(int &score); FILE *Pun;
-void Leer_Puntaje(); 
+//Declarando funciones principales.
+void dibujar_cuerpo(int &tam);
+void guardar_posicion(int &posx, int &posy, int &n, int &tam);
+void borrar_guardado(int &tam);
+void borrar_cuerpo(int &n);
+void mover_snake(int &posx, int &posy, int tecla);
+void cambiar_velocidad(int &velocidad);
+void comida(int &posx_c, int &posy_c, int &tam, int &score);
+void puntaje(int &score);
+void guardar_puntaje(int &score); FILE *pun;
+void leer_puntaje();
+void inicializando_variables(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h);
+void reiniciar_partida();
+bool game_over();
 
-//Aqui estamos inicializando todas las variables que usaremos en todo el programa.
-int Cuerpo[200][2];
+
+//Inicializando tamaño, velocidad, posicion, ect.
+int cuerpo[200][2];
+int posx = 10, posy = 12;
 int n = 1;
-int Tam = 3;
-int x = 10, y = 12;
-int Dir = 3;
-int xc = 30, yc = 15;
-int Velocidad = 100, h = 1;
+int tam = 3;
+int dir = 3;
+int posx_c = 30, posy_c = 15;
+int velocidad = 100, h = 1;
 int score = 0;
-char Tecla;
 
 
-/*Desde este punto empezamos a definir todas las funciones, tanto como del juego
-como las funciones que tienen que ver con la interfaz.*/
+//Definiendo funciones principales.
+void dibujar_cuerpo(int &tam){
+	if(posx > 2 && posx < 117 && posy > 2 && posy < 28){
+		for(int i = 1; i < tam; i++){
+			gotoxy(cuerpo[i][0], cuerpo[i][1]);
+			printf("\033[0;32m");printf("*");printf("\033[0m");
+		}
+	}
+}
 
-void Guardar_posicion(int &x, int &y, int &n, int &Tam){
-	Cuerpo[n][0] = x ;
-	Cuerpo[n][1] = y ;
+//Guadar posicion.
+void guardar_posicion(int &posx, int &posy, int &n, int &tam){
+	cuerpo[n][0] = posx;
+	cuerpo[n][1] = posy;
 	n ++;
-	if( n == Tam ){
-		n = 1;
+	if(n == tam){
+		n = 1;	//La parte de atrás del cuerpo será la cabeza.
 	}
 }
 
-void Dibujar_cuerpo(int &Tam){
-	if(x > 2 && x < 117 && y > 2 && y < 28){
-		for(int i = 1; i < Tam; i++){
-			gotoxy(Cuerpo[i][0] , Cuerpo[i][1]);
-			printf("\033[0;32m"); printf("*"); printf("\033[0m");
-		}
-	}
-}
-void Borrar_cuerpo(int &n){
-	gotoxy(Cuerpo[n][0] , Cuerpo[n][1]); printf(" ");
+//Borrar cuerpo.
+void borrar_cuerpo(int &n){
+	gotoxy(cuerpo[n][0], cuerpo[n][1]);printf(" ");
 }
 
-void Borrar_guardado(int &Tam){
-	for(int i = 1; i < Tam; i++){
-		gotoxy(Cuerpo[i][0] , Cuerpo[i][1]); printf(" ");
+//Borrar guardado.
+void borrar_guardado(int &tam){
+	for(int i = 1; i < tam; i++){
+		gotoxy(cuerpo[i][0], cuerpo[i][1]);printf(" ");	//Así borraremos el rastro que deja.
 	}
 }
 
+//Mover snake.
+void mover_snake(int &posx, int &posy, int tecla){
+	//Moviento Snake.
+	if(kbhit()){
+		tecla = getch();
+		switch(tecla){
+			//Caso ARRIBA.
+			case ARRIBA:
+				if(posy > 2)	//Verifica la posicion de la snake con respecto a lo limites.
+				if(dir != 2)	//Verifica si la direccion actual no es la contraria, si es asi, cambiamos de direccion.
+				dir = 1;
+			break;	//Fin del caso ARRIBA.
 
-void Teclear(){
-    //Moviento de la serpiente.
-
-    if(kbhit()){
-        Tecla = getch();
-        switch (Tecla){
-
-            case ARRIBA:
-				if(y > 2)
-				if(Dir != 2)
-				Dir = 1;
-				break;
-
+			//Caso ABAJO.
 			case ABAJO:
-				if(y < 28) 
-				if(Dir != 1)
-				Dir = 2;
-				break;
+				if(posy < 28)
+				if(dir != 1)
+				dir = 2;
+			break;	//Fin del caso ABAJO.
 
+			//Caso DERECHA.
 			case DERECHA:
-				if(x < 117) 
-				if(Dir != 4)
-				Dir = 3;
-				break;
+				if(posx < 117)
+				if(dir != 4)
+				dir = 3;
+			break;	//Fin del caso DERECHA.
 
+			//Caso IZQUIERDA.
 			case IZQUIERDA:
-				if(x > 2)
-				if(Dir != 3)
-				Dir = 4;
-				break;
+				if(posx > 2)
+				if(dir != 3)
+				dir = 4;
+			break;	//Fin del caso IZQUIERDA.
 		}
 	}
 }
 
-void Cambiar_velocidad(int &Velocidad){
+//Cambiar velocidad.
+void cambiar_velocidad(int &velocidad){
 	if(score == h*20){
-		Velocidad -= 5;
+		velocidad -= 5; //Mientras más cerca de 0, la velocidad aumentará.
 		h++;
 	}
 }
 
-void Comida(int &xc, int &yc, int &score,int &Tam, int &Velocidad){
-	if(x == xc && y == yc){
-
-		xc = (rand()%112) + 4;
-		yc = (rand()%23 ) + 4;
-
-		Tam++;
+//Comida.
+void comida(int &posx_c, int &posy_c, int &tam, int &score){
+	if(posx == posx_c && posy == posy_c){
+		posx_c = (rand()%112) + 4;
+		posy_c = (rand()% 23) + 4;
+		tam++;
 		score += 10;
-		gotoxy (xc,yc); 
-		printf("\033[1;31m");printf ("%c",4);printf("\033[0m");
-
-		Cambiar_velocidad(Velocidad);
+		gotoxy(posx_c, posy_c);
+		printf("\033[1;31m");printf("%c",4);printf("\033[0m");
+		cambiar_velocidad(velocidad);
 	}
 }
 
-void Puntaje(int &score){
-gotoxy (3, 1); printf("score %d",score);
+//Puntaje.
+void puntaje(int &score){
+	gotoxy(3, 1);printf("score %d",score);
 }
 
-
-void Mejor_Puntaje(int &score){
+//Guardar punatje.
+void guardar_puntaje(int &score){
 	system("cls");
-	
-	Pun = fopen("Mejor Puntaje.txt", "a+");
-	gotoxy(1,1); printf("INGRESE SU NOMBRE PARA GUARDAR SU RECORD: ");
-	
-	char Nombre[15];
-	
-    scanf("%s", Nombre);
-	gotoxy(1,2); printf("%s %d puntos", Nombre, score);
-	fprintf(Pun, "%s %d \n", Nombre, score);
-	
-	Sleep(2000);
+	pintar_marco();
 
-	fclose(Pun);
-	
-    system("cls");
-    Pintar_Marco();
-    gotoxy(51,13); printf("Gracias por jugar!");
-    gotoxy(34,14); printf("Presiona cualquier tecla para finalizar el programa.");
-	getch();
-    exit(0);
+	pun = fopen("Score.txt", "a+");	//Abrimos el archivo, y sino está, se creará dicho archivo.
+	gotoxy(37,3);printf("INGRESE SU NOMBRE PARA GUARDAR SU RECORD: \n");
+
+	char nombre[15];
+	char vacio[47] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+					' ',' ',' ', ' '
+					};
+
+	gotoxy(37, 4);scanf("%s",nombre);	//Se guarda el usuario.
+	gotoxy(37, 5);printf("%s %d PUNTOS", nombre, score);
+	fprintf(pun, "%s ", vacio);fprintf(pun,"%d \n", score);	//Se guarda el record.
+
+	getch();	//Se espera que el usuario presiona cualquier tecla.
+	fclose(pun);	//Se cierra el archivo.
 }
 
-void Leer_Puntaje(){
-	Pun = fopen("Mejor Puntaje.txt", "r");
+//Leer puntaje.
+void leer_puntaje(){
+	pun = fopen("Score.txt", "r");	//Se abre el archivo en formato de lectura.
 	int c;
-	
+
 	system("cls");
+	pintar_marco();
+	gotoxy(47,3);printf("MEJORES PUNTUACIONES:\n");
 
-	gotoxy(0,1);printf("MEJORES PUNTUACIONES:\n");
-	
-	while((c = getc(Pun)) != EOF){
-		if(c == '\n') printf("\n");
-		else printf("%c", c);	
+	while((c = getc(pun)) != EOF){	//Mientras no se alcance el final del archivo.
+		if(c == '\n'){
+			printf("\n");	//Si hay salto de linea, se imprime dicho caracter.
+		}
+		else{
+			printf("%c", c);	//Si hay un caracter, se imprime.
+		}
 	}
-	getch();
-	fclose(Pun);
+	getch();	//Se espera que el usuario presiona cualquier tecla.
+	fclose(pun);	//Se cierra el archivo.
 }
 
-void Reiniciar_Partida(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score,int &Velocidad, int &h){
-	gotoxy(39, 13);
-    printf("                                      ");
-    gotoxy(41,14);
-    printf("                                   ");
-    gotoxy(47, 15);
-    printf("                         ");
-
-	Borrar_guardado(Tam);
+//Inicializando variables.
+void inicializando_variables(int &posx, int &posy, int &n, int &tam, int &posx_c, int &posy_c, int &dir, int &score, int &velocidad, int &h){
+	//Inicializando variables.
+	posx = 10, posy = 12;
 	n = 1;
-	Tam = 3;
-	x = 10, y = 12;
-	Dir = 3; 
-	Velocidad = 100,
-	h = 1;
+	tam = 3;
+	dir = 3;
+	posx_c = 30, posy_c = 15;
+	velocidad = 100, h = 1;
 	score = 0;
-	gotoxy(xc,yc); printf (" ",4);
-	gotoxy(xc,yc); printf("\033[1;31m");printf ("%c",4);printf("\033[0m");
-	gotoxy(3, 1); printf("score    ");
-	Pintar_Marco();
 }
 
-bool Game_over(int &n, int &Tam, int &x, int &y, int &xc, int &yc, int &Dir, int &score, int &Velocidad, int &h){
+//Reiniciar partida.
+void reiniciar_partida(){
+	system("cls");
+	borrar_guardado(tam);
+	inicializando_variables(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h);
+	gotoxy(posx_c,posy_c);printf("\033[1;31m");printf("%c",4);printf("\033[0m");
+	pintar_marco();
+}
 
-	if(y == 2 || y == 28 || x == 2 || x == 117){
-		Dir = 0;
-
-		gotoxy(39, 13);
-		printf("-Presione A para reiniciar la partida.");
-
-		gotoxy(41,14);
-
-		printf("-Presione P para guardar su record!");
-
-		gotoxy(47, 15);
-		printf("-Presione ESC para salir.");
-
-		Tecla = getch();
-		if(Tecla == 'P' || Tecla == 'p'){
-			Mejor_Puntaje(score);	
-		}
-		if(Tecla == 'a' || Tecla == 'A'){
-			Reiniciar_Partida(n, Tam, x, y, xc, yc, Dir, score, Velocidad, h);	
+//Game over.
+bool game_over(){
+	//Opcion: Limites del juego.
+	if(posy == 2 || posy == 28 || posx == 2 || posx == 117){
+		return true;
+	}
+	//Opcion: Choque contigo mismo.
+	for(int a = tam - 1; a > 0; a--){
+		if(cuerpo[a][0] == posx && cuerpo[a][1] == posy){
+			return true;
 		}
 	}
-
-		for(int a = Tam - 1; a > 0; a--){
-			if(Cuerpo[a][0] == x && Cuerpo[a][1] == y){
-				Dir = 0;
-
-				gotoxy(39, 13);
-				printf("-Presione A para reiniciar la partida.");
-
-				gotoxy(41,14);
-				printf("-Presione P para guardar su record!");
-
-				gotoxy(47, 15);
-				printf("-Presione ESC para salir.");
-
-				Tecla = getch();
-				if(Tecla == 'a' || Tecla == 'A'){
-					Reiniciar_Partida(n, Tam, x, y, xc, yc, Dir, score, Velocidad, h);	
-				}
-
-				if(Tecla == 'p' || Tecla == 'P'){
-					Mejor_Puntaje(score);	
-				}
-			}
-		}
-return true;
+	return false;
 }
