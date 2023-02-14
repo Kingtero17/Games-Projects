@@ -138,18 +138,18 @@ void guardar_puntaje(int &score){
 	pintar_marco();
 
 	pun = fopen("Score.txt", "a+");	//Abrimos el archivo, y sino está, se creará dicho archivo.
-	gotoxy(37,3);printf("INGRESE SU NOMBRE PARA GUARDAR SU RECORD: \n");
+	gotoxy(39,3);printf("INGRESE SU NOMBRE PARA GUARDAR RECORD:\n");
 
 	char nombre[15];
-	char vacio[47] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
+	char vacio[48] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
 					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
 					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
 					' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
-					' ',' ',' ', ' '
+					' ',' ',' ', ' ', ' '
 					};
 
-	gotoxy(37, 4);scanf("%s",nombre);	//Se guarda el usuario.
-	gotoxy(37, 5);printf("%s %d PUNTOS", nombre, score);
+	gotoxy(39, 4);scanf("%s",nombre);	//Se guarda el usuario.
+	gotoxy(39, 5);printf("%s %d PUNTOS", nombre, score);
 	fprintf(pun, "%s ", vacio);fprintf(pun,"%d \n", score);	//Se guarda el record.
 
 	getch();	//Se espera que el usuario presiona cualquier tecla.
@@ -163,7 +163,7 @@ void leer_puntaje(){
 
 	system("cls");
 	pintar_marco();
-	gotoxy(47,3);printf("MEJORES PUNTUACIONES:\n");
+	gotoxy(48,3);printf("MEJORES PUNTUACIONES:\n");
 
 	while((c = getc(pun)) != EOF){	//Mientras no se alcance el final del archivo.
 		if(c == '\n'){
@@ -173,6 +173,7 @@ void leer_puntaje(){
 			printf("%c", c);	//Si hay un caracter, se imprime.
 		}
 	}
+	pintar_marco();
 	getch();	//Se espera que el usuario presiona cualquier tecla.
 	fclose(pun);	//Se cierra el archivo.
 }
