@@ -85,6 +85,7 @@ int main (){
 							case '2':
 								guardar_puntaje(score);
 								menu_post_puntaje();
+								//Opcion Menu post puntaje.
 								do{
 									tecla = getch();
 									switch(tecla){
@@ -92,7 +93,7 @@ int main (){
 										case '1':
 											reiniciar_partida();
 										break;//Fin del caso '1'.
-										
+
 										//Caso '2' (Post puntaje).
 										case '2':
 											system("cls");
