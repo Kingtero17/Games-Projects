@@ -3,6 +3,11 @@ void gotoxy(int x, int y);
 void ocultar_cursor();
 void pintar_marco();
 void menu_inicio();
+void menu_controles();
+void menu_pausa();
+void menu_game_over();
+void post_puntaje();
+void pantalla_final();
 
 //Definiendo funciones interfaz.
 
@@ -119,11 +124,20 @@ void menu_pausa(){
 
 //Menu Game over.
 void menu_game_over(){
+	gotoxy(54, 7); printf("GAME OVER");
 	gotoxy(28, 9); printf("SALIR:              Presione ESC para salir.");
 	gotoxy(28, 10);printf("REINICIAR PARTIDA:  Presione 1 para reiniciar la partida.");
 	gotoxy(28, 11);printf("GUARDAR RECORD:     Presione 2 para guardar su record.");
     gotoxy(28, 12);printf("MENU DE INICIO:     Presione 3 para volver al menu de inicio.");
+}
 
+void post_puntaje(){
+	system("cls");
+	pintar_marco();
+	gotoxy(42, 7); printf("ELIGE UNA OPCION PARA CONTINUAR:");
+	gotoxy(28, 9); printf("SALIR:              Presione ESC para salir.");
+	gotoxy(28, 10);printf("JUGAR DE NUEVO:     Presione 1 para jugar de nuevo.");
+    gotoxy(28, 11);printf("MENU DE INICIO:     Presione 2 para volver al menu de inicio.");
 }
 
 //Pantalla final del juego.
