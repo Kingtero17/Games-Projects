@@ -6,7 +6,7 @@ void menu_inicio();
 void menu_controles();
 void menu_pausa();
 void menu_game_over();
-void post_puntaje();
+void menu_post_puntaje();
 void pantalla_final();
 
 //Definiendo funciones interfaz.
@@ -131,7 +131,8 @@ void menu_game_over(){
     gotoxy(28, 12);printf("MENU DE INICIO:     Presione 3 para volver al menu de inicio.");
 }
 
-void post_puntaje(){
+//Menu post_puntaje.
+void menu_post_puntaje(){
 	system("cls");
 	pintar_marco();
 	gotoxy(42, 7); printf("ELIGE UNA OPCION PARA CONTINUAR:");

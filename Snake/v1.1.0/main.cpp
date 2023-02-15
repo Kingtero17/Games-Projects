@@ -84,27 +84,29 @@ int main (){
 							//Caso '2' (Game over).
 							case '2':
 								guardar_puntaje(score);
-								post_puntaje();
-								tecla = getch();
-								switch(tecla){
-									//Caso '1' (Post puntaje).
-									case '1':
-										reiniciar_partida();
-									break;//Fin del caso '1'.
-									
-									//Caso '2' (Post puntaje).
-									case '2':
-										system("cls");
-										inicializando_variables(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h);
-										return main();
-									break;//Fin del caso '2'.
+								menu_post_puntaje();
+								do{
+									tecla = getch();
+									switch(tecla){
+										//Caso '1' (Post puntaje).
+										case '1':
+											reiniciar_partida();
+										break;//Fin del caso '1'.
+										
+										//Caso '2' (Post puntaje).
+										case '2':
+											system("cls");
+											inicializando_variables(posx, posy, n, tam, posx_c, posy_c, dir, score, velocidad, h);
+											return main();
+										break;//Fin del caso '2'.
 
-									//Caso ESC (Post puntaje).
-									case ESC:
-										pantalla_final();
-										return 0;
-									break;//Fin del caso ESC.
-								}
+										//Caso ESC (Post puntaje).
+										case ESC:
+											pantalla_final();
+											return 0;
+										break;//Fin del caso ESC.
+									}
+								}while(tecla != '1' && tecla != '2' && tecla != ESC);	//Mientras sea verdadero, se ejecutara el loop.
 							break;//Fin del caso '2'.
 
 							//Caso '3' (Game over).
